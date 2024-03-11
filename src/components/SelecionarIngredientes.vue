@@ -1,24 +1,24 @@
 <script lang="ts">
-import { obterMissoes } from '@/http/index'; // Importando a função correta
+import { obterMissoes } from '@/http/index'; 
 import { obterCategorias } from '@/http/index';
-import type IMissoao from '@/interfaces/IMissoes';
+import type IMissao from '@/interfaces/IMissoes';
 import type ICategoria from '@/interfaces/ICategoria';
 import CardCategoria from './CardCategoria.vue';
 import BotaoPrincipal from './BotaoPrincipal.vue';
-import CardMissao from './CardMissao.vue'; // Importe CardMissao
+import CardMissao from './CardMissao.vue'; 
 
 export default {
   name: 'SelecionarIngredientes',
   data() {
     return {
       categorias: [] as ICategoria[],
-      missoes: [] as IMissoes[]
+      missoes: [] as IMissao[]
     };
   },
   async created() {
     this.categorias = await obterCategorias();
-    const missoes = await obterMissoes();
-    console.log(missoes)
+     this.missoes = await obterMissoes();
+  
   },
   components: { CardCategoria, CardMissao, BotaoPrincipal },
   emits: ['adicionarIngrediente', 'removerIngrediente', 'buscarReceitas', 'removerMissao', 'adicionarMissao']
@@ -33,31 +33,25 @@ export default {
     Cada uma das nossas missões pode te recompensar com bazicash, para você trocar por produtos incríveis!
     </p>
 
-    <ul class="categorias">
-      <li v-for="categoria in categorias" :key="categoria.nome">
-        <CardCategoria
-          :categoria="categoria"
-          @adicionar-ingrediente="$emit('adicionarIngrediente', $event)"
-          @remover-ingrediente="$emit('removerIngrediente', $event)"
-        />
-      </li>
-    </ul>
 
-    <h2 class="cabecalho">Teste de Missões</h2>
+  
+  
     <ul class="missoes">
-      <li v-for="missao in missoes" :key="missao.nome">
-        <CardMissao
-        :missao="missao"
-         @adicionar-missao="$emit('adicionarMissao', $event)"
-         @remover-missao="$emit('removerMissao', $event)" />
-      </li>
-    </ul>
+  <li v-for="missao in missoes" :key="missao.nome">
+    <CardMissao
+      :missao="missao"
+      @adicionar-missao="$emit('adicionarMissao', $event)"
+      @remover-missao="$emit('removerMissao', $event)" />
+      <br>
+  </li>
+</ul>
+
 
     <p class="paragrafo dica">
       *Atenção: consideramos que você tem em casa sal, pimenta e água.
     </p>
 
-    <BotaoPrincipal texto="Buscar receitas!" @click="$emit('buscarReceitas')" />
+    <BotaoPrincipal texto="Checar missões!" @click="$emit('buscarReceitas')" />
   </section>
 </template>
 
@@ -98,22 +92,21 @@ export default {
 }
 
 /* Estilos para os cards de missão, adaptados dos estilos de categoria */
-.missao {
-  width: 19.5rem; /* ou outro valor conforme o design das categorias */
-  padding: 1rem;
-  border-radius: 1rem;
-  background: var(--branco, #FFF);
-  box-shadow: 4px 4px 10px 0px rgba(68, 68, 68, 0.05);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2rem;
+.missoes {
+  width: 100%; /* Faz com que a lista ocupe toda a largura disponível */
+  list-style: none; /* Remove os marcadores padrão da lista */
+  padding: 0; /* Remove o padding padrão da lista */
+  margin: 0 auto; /* Centraliza a lista se necessário */
 }
 
-.missao__cabecalho {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem; /* Corrigido para incluir 'rem' no final e terminar a declaração */
+.missoes li {
+  width: 100%; /* Faz com que cada item da lista ocupe a largura total disponível */
+  margin-bottom: 1rem; /* Adiciona espaço entre os itens da lista */
+}
+
+/* Mantém os estilos originais do card de missão */
+.missao {
+  width: 100%; /* Faz com que o card de missão ocupe toda a largura disponível da sua linha */
+  /* Mantém os outros estilos existentes */
 }
 </style>

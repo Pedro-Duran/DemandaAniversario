@@ -12,52 +12,55 @@ export default {
   components: { Tag, DescricaoSelecionavel },
   emits: ['adicionarMissao', 'removerMissao']
 }
-</script>
 
+</script>
 <template>
   <article class="missao">
-    <header class="missao__cabecalho">
-      <h2 class="paragrafo-lg missao__nome">{{ missao.nome }}</h2>
-    </header>
-
-    <!-- Aqui apenas mostramos a descrição sem iterar, uma vez que é uma string -->
-    <p class="missao__descricao">
-      {{ missao.descricao }}
-    </p>
+    <div class="missao__bazicash">{{ missao.bazicash }} Bazicash</div>
+    <div class="missao__conteudo">
+      <h2 class="missao__nome">{{ missao.nome }}</h2>
+      <p class="missao__descricao">{{ missao.descricao }}</p>
+    </div>
   </article>
 </template>
 
+
 <style scoped>
 .missao {
-  width: 19.5rem;
+  width: 100%;
   padding: 1rem;
   border-radius: 1rem;
-  background: var(--branco, #FFF);
-  box-shadow: 4px 4px 10px 0 rgba(68, 68, 68, 0.05);
-  height: auto; /* Alterado para auto para acomodar o conteúdo */
-
+  background: var(--branco, #FFF); /* Mantém o fundo geral do card branco */
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  align-items: center; /* Centraliza os filhos verticalmente */
   gap: 2rem;
 }
 
-.missao__cabecalho {
+.missao__bazicash {
+  flex: 0 1 auto; /* Não cresce, mas pode encolher */
+  font-weight: bold;
+  font-size: 1.5rem; /* Aumente o tamanho da fonte conforme necessário */
+  color: var(--branco, #FFF); /* Altera a cor do texto para branco para contraste */
+  background-color: #754EA9; /* Define a cor de fundo para a cor hexadecimal fornecida */
+  padding: 0.5rem 1rem; /* Adiciona um pouco de padding para espaço ao redor do texto */
+  border-radius: 0.5rem; /* Adiciona bordas arredondadas para estética */
+}
+
+.missao__conteudo {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
+  flex-direction: column; /* Organiza título e descrição verticalmente */
+  flex: 1; /* Ocupa o espaço restante */
 }
 
 .missao__nome {
-  text-align: center;
+  margin: 0; /* Remove a margem padrão do h2 */
   color: var(--verde-medio, #3D6D4A);
   font-weight: 700;
+  text-align: left;
 }
 
 .missao__descricao {
-  text-align: center;
   color: var(--cinza-escuro, #333);
-  /* Adicione mais estilos aqui se necessário */
+  text-align: left;
 }
 </style>
